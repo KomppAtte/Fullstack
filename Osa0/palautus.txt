@@ -1,0 +1,54 @@
+0.4:
+selain->palvelin: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+note over selain:
+sisältää tiedon viestistä sekä
+minne sen kuuluu mennä
+end note
+palvelin-->selain: redirectaus
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+palvelin-->selain: HTML koodi
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+palvelin-->selain: CSS tiedosto
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+palvelin-->selain: Javascript tiedosto
+note over selain:
+selain suorittaa koodia ja pyytää 
+JSON tiedostoa tekemään asiansa
+end note
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+palvelin-->selain: Json tiedosto {"content":"tilpitappi","date":"2020-11-19T13:31:58.255Z"}
+note over selain:
+selain suorittaa tapahtumakäsittelijän
+ja muistiinpano tulee näytölle
+end note
+selain->palvelin: HTTP GET https://studies.cs.helsinki.fi/favicon.ico
+palvelin-->selain: tiedosto kurssitiedoille 
+
+0.5:
+selain -> palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+palvelin --> selain: spa tiedosto jossa HTML koodi
+selain -> palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+palvelin --> selain: CSS tiedosto
+selain -> palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+palvelin --> selain: Javascript tiedosto
+note over selain:
+selain suorittaa js koodia ja
+pyytää JSON datan
+end note
+selain -> palvelin: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+palvelin --> selain: Json tiedosto [{"content":"HTML is easy","date":"2019-05-23T17:30:31.098Z"} jne..
+note over selain :
+selain suorittaa käsittelijän 
+joka näyttää muistiinpanot näytöllä
+end note
+selain -> palvelin : HTTP GET https://studies.cs.helsinki.fi/favicon.ico
+palvelin --> selain: kurssin tiedot tiedosto
+
+0.6:
+selain -> palvelin: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+palvelin --> selain: JSON muotoinen muistiinpano
+note over selain:
+Kaikki tarvittava tieto on annettu
+koodissa, joten sivu osaa toimia
+sen mukaan ilman useampia HTTP pyyntöjä
+end note
