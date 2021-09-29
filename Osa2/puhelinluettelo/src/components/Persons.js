@@ -1,17 +1,13 @@
 import React from "react";
 
-const Persons = ({persons}) => {
+const List = (props) => {
     return (
         <div>
-            {persons.map(person =>
-            <List key={person.name} person={person}/>
-            )}
+            <p>{props.person.name} {props.person.number} 
+            <button onClick={props.selectDelete}>delete</button>
+            </p>
         </div>
     )
 }
 
-const List = (props) => (
-    <p>{props.person.name} {props.person.number}</p>
-  )
-
-export default Persons
+export default List
