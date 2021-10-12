@@ -1,9 +1,10 @@
 const express = require('express')
 var morgan = require('morgan')
 const app = express()
+const cors = require('cors')
 
 app.use(express.json())
-
+app.use(cors())
 app.use(morgan('tiny'))
 console.log(morgan('tiny'))
 
@@ -95,7 +96,7 @@ app.delete('/api/persons/:id', (req, res) => {
   res.status(204).end()
 })
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
