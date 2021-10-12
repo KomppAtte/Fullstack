@@ -3,12 +3,27 @@ import Filter from './components/Filter'
 import Form from './components/Form'
 import List from './components/Persons'
 import personService from './services/persons'
+import './index.css'
+
+
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className="success">
+      {message}
+    </div>
+  )
+}
 
 const App = () => {
   const [ persons, setPersons] = useState([]) 
   const [ newName, setNewName ] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setNewFilter] = useState('')
+  const [newMessage, setNewMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -44,6 +59,10 @@ const App = () => {
         setPersons(persons.concat(returnedPerson))
         setNewName('')
         setNewNumber('')
+        setNewMessage(`person '${returnedPerson.name}' was added`)
+        setTimeout(() => {
+          setNewMessage(null)
+        },5000)
       })
     } else {
       window.alert(`${newName} or ${newNumber} is already added to phonebook`)
@@ -55,7 +74,13 @@ const App = () => {
     console.log(person)
     
     if(window.confirm("haluatko poistaa?")) {
-      personService.deletePerson(id).then()
+      personService.deletePerson(id).then(
+        returned => {
+        setNewMessage(`person '${person.name}' was removed`)
+        setTimeout(() => {
+          setNewMessage(null)
+        },5000)
+      })
     }
     
   }
@@ -80,6 +105,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={newMessage}/>
       <div>
       <Filter value={newFilter} handle={handleFilterChange}/>
       </div>
