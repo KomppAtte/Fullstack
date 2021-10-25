@@ -32,13 +32,12 @@ app.get('/api/persons', (req, res) => {
 })
 
 app.get('/info', (req, res) => {
-  let vari = 0;
-    Person.find({}).then(result => {
-      result.foreach(person => {
-        vari++
-      })
-    })
-    console.log('<p>Phonebook has info for ' + vari + ' people</p>' + new Date())
+  let vari = 0
+  Person.find({}).then(result => {
+    result.foreach(person => {
+      vari++
+    })    })
+  console.log('<p>Phonebook has info for ' + vari + ' people</p>' + new Date())
 })
 
 app.get('/api/persons/:id', (req, res, next) => {
@@ -49,19 +48,19 @@ app.get('/api/persons/:id', (req, res, next) => {
       res.status(404).end()
     }
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.post('/api/persons', (req, res, next) => {
   const body = req.body
 
   if (!body.name) {
-    return res.status(400).json({ 
-      error: 'name missing' 
+    return res.status(400).json({
+      error: 'name missing'
     })
   } else if (!body.number) {
-    return res.status(400).json({ 
-      error: 'number missing' 
+    return res.status(400).json({
+      error: 'number missing'
     })
   }
 
@@ -73,15 +72,15 @@ app.post('/api/persons', (req, res, next) => {
   person.save().then(savedPerson => {
     res.json(savedPerson.toJSON())
   })
-  .catch(error => next(error))
+    .catch(error => next(error))
 })
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
-  .then(result => {
-    res.status(204).end()
-  })
-  .catch(error => next(error))
+    .then(result => {
+      res.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 const unknownEndpoint = (req, res) => {
