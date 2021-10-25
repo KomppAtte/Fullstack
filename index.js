@@ -65,16 +65,7 @@ app.post('/api/persons', (req, res, next) => {
     })
   }
 
-  //persons.map(pers => {
-  //  if(body.name === pers.name) {
-  //    return res.status(400).json({
-  //      error: 'name already exists'
-  //    })
-  //  }
-  //})
-
   const person = new Person({
-    //id: generateId(),
     name: body.name,
     number: body.number
   })
@@ -84,11 +75,6 @@ app.post('/api/persons', (req, res, next) => {
   })
   .catch(error => next(error))
 })
-
-//const generateId = () => {
-//  console.log(Math.floor(Math.random() * 1000))
-//  return Math.floor(Math.random() * 1000)
-//}
 
 app.delete('/api/persons/:id', (req, res, next) => {
   Person.findByIdAndRemove(req.params.id)
