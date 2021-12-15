@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-const Blog = ( {blog} ) => {
+import React, { useState } from 'react'
+const Blog = ( { blog } ) => {
   const [ showAllInfos, changeShowAll ] = useState(false)
 
   const blogInfo = () => (
