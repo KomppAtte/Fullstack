@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
 import blogService from './services/blogs'
-import loginService from './services/login' 
+import loginService from './services/login'
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
@@ -9,8 +9,7 @@ import Togglable from './components/Togglable'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newBlog, setNewBlog] = useState('')
-  const [username, setUsername] = useState('uusi') 
+  const [username, setUsername] = useState('uusi')
   const [password, setPassword] = useState('testis')
   const [errorMessage, setErrorMessage] = useState(null)
   const [style, setStyle] = useState(null)
@@ -19,7 +18,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -42,7 +41,7 @@ const App = () => {
         handlePasswordChange={({ target }) => setPassword(target.value)}
         handleSubmit={handleLogin}
       />
-    </Togglable>   
+    </Togglable>
   )
 
   const handleLogin = async (event) => {
@@ -94,6 +93,14 @@ const App = () => {
       })
   }
 
+  const blogUpvote = (id, likedBlog) => {
+    blogService
+      .update(id, likedBlog)
+      .then(() => {
+        setBlogs(blogs.map(blog => blog.id !== id ? blog : likedBlog))
+      })
+  }
+
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     window.location.reload()
@@ -114,16 +121,16 @@ const App = () => {
         loginForm() :
         <div>
           <p>{user.name} logged in
-          <button onClick={handleLogout}> logout 
-          </button>
+            <button onClick={handleLogout}> logout
+            </button>
           </p>
           <div>
             <h2> Create New </h2>
             {blogForm()}
           </div>
           {blogs.map(blog =>
-              <Blog key={blog.id} blog={blog} />
-            )}
+            <Blog key={blog.id} blog={blog} blogUpvote={blogUpvote}/>
+          )}
         </div>
       }
     </div>

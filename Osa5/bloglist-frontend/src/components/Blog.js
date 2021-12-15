@@ -1,6 +1,21 @@
 import React, { useState } from 'react'
-const Blog = ( { blog } ) => {
+
+const Blog = ( { blog, blogUpvote } ) => {
   const [ showAllInfos, changeShowAll ] = useState(false)
+
+  const likeBlog = (event) => {
+    event.preventDefault()
+    blogUpvote(blog.id, {
+      id: blog.id,
+      user: (blog.user === null ?
+        '' :
+        blog.user),
+      likes: blog.likes + 1,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url
+    })
+  }
 
   const blogInfo = () => (
     <div>
@@ -8,7 +23,7 @@ const Blog = ( { blog } ) => {
         { blog.url }
       </div>
       <div>
-        { blog.likes } <button onClick={ '' }>Like</button>
+        { blog.likes } <button onClick={ likeBlog }>Like</button>
       </div>
     </div>
   )
